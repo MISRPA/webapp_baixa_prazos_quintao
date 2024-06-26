@@ -117,8 +117,9 @@ Baixe a planilha modelo abaixo.
     st.markdown(
         gerar_markdown_download_excel(
             dicio_excel={'BASE': pd.DataFrame(columns=COLUNAS_OBRIGATORIAS)},
-            name='insert_prazos_baixados.xlsx',
-            texto_botao='Planilha Modelo'
+            name='modelo_insert_prazos_baixados.xlsx',
+            texto_botao='Planilha Modelo',
+            btn_class='css-lte5cn ef3psqc11'
             ),
         unsafe_allow_html=True
     )
