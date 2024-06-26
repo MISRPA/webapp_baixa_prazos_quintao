@@ -127,6 +127,7 @@ def exibir_outros_apps():
         'Robô Rastreamento Andamentos BB': 'http://10.0.211.82:8505/',
         'Robô Sentença BB': 'http://10.0.211.82:8508/',
         'Robô Higienização BB': 'http://10.0.211.82:8509/',
+        'Robô Prazos Leticia Quintão': 'http://10.0.211.82:8510/',
     }
 
     for name, link in links.items():

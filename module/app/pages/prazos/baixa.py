@@ -30,7 +30,7 @@ texto_colunas = "\n".join(list('- '+ i for i in COLUNAS_OBRIGATORIAS))
 robo = 'webapp_baixa_prazos'
 
 
-PRODUCAO = False
+PRODUCAO = True
 if not PRODUCAO:
     print('////////////// AMBIENTE DE DESENVOLVIMENTO ///////////')
     print('BAIXA DE PRAZOS')
