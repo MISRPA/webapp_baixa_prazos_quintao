@@ -1,1 +1,1 @@
-cmd /k "cd /d C:\repositorios_producao\webapp_baixa_prazos_quintao\venv\Scripts & activate & echo AMBIENTE VIRTUAL ATIVADO & cd /d C:\repositorios_producao\webapp_baixa_prazos_quintao & echo EXECUTANDO SCRIPT & streamlit run run_app.py --server.port 8502
+cmd /k "cd /d C:\repositorios_producao\webapp_baixa_prazos_quintao\venv\Scripts & activate & echo AMBIENTE VIRTUAL ATIVADO & cd /d C:\repositorios_producao\webapp_baixa_prazos_quintao & echo EXECUTANDO SCRIPT & streamlit run run_app.py --server.port 8510
