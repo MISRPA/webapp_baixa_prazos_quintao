@@ -1,0 +1,12 @@
+[Unit]
+Description=Streamlit Relatorios Financeiro
+After=network.target
+[Service]
+EnvironmentFile=/etc/environment
+User=renato.ferreira
+WorkingDirectory=/home/renato.ferreira/repositorio_producao/webapp_relatorios_f$
+ExecStart=/home/renato.ferreira/repositorio_producao/webapp_relatorios_financei$
+Restart=always
+RestartSec=5s
+[Install]
+WantedBy=multi-user.target

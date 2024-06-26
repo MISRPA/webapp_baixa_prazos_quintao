@@ -1,0 +1,13 @@
+QUERY_ASSINATURA = '''
+SELECT 
+	U.IDUSUARIO,
+    U.LOGIN AS USUARIOS,
+	U.NomeCompleto AS NOME,
+	FILIAIS.Nome AS FILIAL,
+	U.Email AS EMAIL
+FROM TOTAL_FC.DBO.tbUsuarios AS U
+	LEFT JOIN TOTAL_FC.DBO.TbFuncionarios AS F ON F.CodFuncionario = U.CodFuncionario
+	LEFT JOIN TOTAL_FC.DBO.tbFuncCargo AS FC ON FC.CodCargo = F.CodCargo
+	LEFT JOIN TOTAL_FC.DBO.TbFiliais AS FILIAIS ON FILIAIS.CodFilial = F.CodFilial
+ORDER BY U.IDUSUARIO DESC
+'''

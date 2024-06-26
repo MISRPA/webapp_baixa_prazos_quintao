@@ -1,0 +1,93 @@
+<div id="email" style="width:auto;margin: auto;background:#f5f5fa;">
+    
+    <table bgcolor="black" role="presentation" border="0" width="100%" cellspacing="0">
+        <tr>
+            <td align="center" style="color: black; box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.3);">
+                <br>
+                <a target="_blank"
+                    href="{{ url_site_header }}"
+                    style="-webkit-text-size-adjust:none;-ms-text-size-adjust:none;text-decoration:underline;color:#FFFFFF;font-size:14px">
+                <img alt="Logo" style="background-color: black; border-radius: 2px; padding: 5px" src="{{ url_logo_header }}" width="100px"></a>
+                <br>
+                <h1 style="font-size: 25px; margin:0 0 10px 0; font-family:gill sans,sans-serif; color: #fff;">{{ nome_robo }}</h1>
+            </td>
+        </tr>
+    </table>
+
+    <table bgcolor="#f5f5fa" role="presentation" border="0" width="100%" cellspacing="0">
+        <tr>
+            <td style="padding: 30px 30px 30px 60px;">
+                <div>
+                    {% for texto in textos %}
+                        <p style="margin:0 0 12px 0;font-size:12px;line-height:24px;font-family:Arial">
+                            {{ texto }}
+                        </p>
+                    {% endfor %}
+                </div>
+            </td> 
+        </tr>
+    </table>
+    
+    <div>
+    
+    <table bgcolor="#ededf5" role="presentation" border="0" width="100%" cellspacing="0" style="box-shadow: 0 0 0.9em #bbb;">
+        <table bgcolor="#ededf5" role="presentation" border="0" width="100%" cellspacing="0">
+            <tr>
+                <td align="center" style="vertical-align: top; padding: 30px 30px 30px 30px;">
+                    {{ dinamica }}
+                </td> 
+            </tr>
+        </table>
+    
+        <table bgcolor="#ededf5" role="presentation" border="0" width="100%" cellspacing="0">
+            <tr>
+                <td align="left" style="vertical-align: top; padding: 30px 30px 30px 30px;">
+                    {% if tabela2 %}
+                    {{ tabela2 }}
+                    {% endif %}
+                </td> 
+                <td align="center" style="vertical-align: top; padding: 30px 30px 30px 30px;">
+                    {% if tabela3 %}
+                    {{ tabela3 }}
+                    {% endif %}
+                </td> 
+                <td align="right" style="vertical-align: top; padding: 30px 30px 30px 30px;">
+                    {% if tabela4 %}
+                    {{ tabela4 }}
+                    {% endif %}
+                </td> 
+            </tr>
+        </table>
+
+    </table>
+
+    <table bgcolor="#f5f5fa" role="presentation" border="0" width="100%" cellspacing="0">
+        <tr>
+            <td style="padding: 30px 30px 30px 60px;">
+                <div>
+                    <p style="margin:0 0 12px 0;font-size:12px;line-height:24px;font-family:Arial">
+                        
+                    </p>
+                </div>
+            </td> 
+        </tr>
+    </table>
+
+    </div>
+    
+    <table bgcolor=black role="presentation" border="0" width="100%" cellspacing="0">
+        <tr style="box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.3);">
+            <td align="left" style="padding: 30px 30px 30px 30px;">
+                <p style="margin:0 0 12px 0; font-size:16px; line-height:24px; color: white; font-family:Arial">{{ nome_equipe }}</p>
+            </td>
+            <td align="right" style="padding: 20px 30px 20px 30px;">
+                <a target="_blank"
+                    href="{{ url_site_footer }}"
+                    style="-webkit-text-size-adjust:none;-ms-text-size-adjust:none;text-decoration:underline;color:#FFFFFF;font-size:14px">
+                <img alt="Logo" src="{{ url_logo_footer }}" width="180px" height="66px" style="overflow: hidden;background-color: black; border-radius: 2px; padding: 5px"></a>
+            </td>
+        </tr>
+    </table> 
+
+</div>
+<p><em><sub>E-mail enviado automaticamente em: {{ data_email }}.</sub></em></p>

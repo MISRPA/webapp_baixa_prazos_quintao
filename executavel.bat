@@ -1,0 +1,2 @@
+
+cmd /k "cd /d C:\repositorios_producao\webapp_baixa_prazos_quintao\venv\Scripts & activate & echo AMBIENTE VIRTUAL ATIVADO & cd /d C:\repositorios_producao\webapp_baixa_prazos_quintao & echo EXECUTANDO SCRIPT & python main.py --main & exit"
