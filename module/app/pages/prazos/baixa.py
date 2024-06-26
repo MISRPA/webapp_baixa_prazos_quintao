@@ -17,37 +17,28 @@ from module.robot.utils import (
 
 
 USUARIOS_PERMITIDOS = [
-    'larissa.silva',
-    'carolina.libano'
+    'leticia.quintao',
 ]
 
 COLUNAS_OBRIGATORIAS = [
-    "IDProc",
-    "Pasta",
-    "IdPrazo",
-    "Status",
-    "DataConclui",
-    "UserConclui",
-]
-
-STATUS = [
-    'B',
-    'C'
+    "IdProc",
+    "DtCompromisso",
+    "Data_cad_prazo",
+    "CodPublicacao",
 ]
 
 texto_colunas = "\n".join(list('- '+ i for i in COLUNAS_OBRIGATORIAS))
-texto_status = '\n'.join(list('- '+ i for i in STATUS))
 
 robo = 'webapp_baixa_prazos'
 
 
-PRODUCAO = True
+PRODUCAO = False
 if not PRODUCAO:
     print('////////////// AMBIENTE DE DESENVOLVIMENTO ///////////')
     print('BAIXA DE PRAZOS')
     print('////////////// AMBIENTE DE DESENVOLVIMENTO ///////////')
     engine = engine_espelho
-    tabela = 'mis.rpa.teste_tbprazos'
+    tabela = 'mis.rpa.teste_webapp_baixa_prazos_quintao'
 else:
     engine = engine_producao_escrita
     tabela = f'TOTAL_FC.dbo.TbPrazos'
@@ -65,22 +56,38 @@ def botao_stop_baixa():
 
 def baixa_prazos(df: pd.DataFrame):
     
+    
+    
     try:
         with engine.begin() as con:
             for index, row in df.iterrows():
                 con.execute(text(f'''
-    UPDATE {tabela}
-    SET 
-        Status = :Status
-        ,UserConclui = :USER_CONCLUI
-        ,DataConclui = :DATACONCLUSAO
-    WHERE ID = :IDPRAZO
-
+    INSERT INTO {tabela} (
+        IDPROC,
+        DTCOMPROMISSO,
+        CODTIPOPRAZO,
+        PEREMPTORIO,
+        CODADVOGADO,
+        USERCAD,
+        DATACAD,
+        STATUS,
+        CODPUBLICACAO) 
+    VALUES (
+        :IDPROC,
+        :DTCOMPROMISSO,
+        1775,
+        'SIM',
+        '228',
+        'ROBO.WEBAPP.LETICIA',
+        :DATA_CAD_PRAZO,
+        'B',
+        :CODPUBLICACAO
+    )
     '''), [{
-        'Status': row['Status'],
-        'DATACONCLUSAO': row['DataConclui'],
-        'USER_CONCLUI': row['UserConclui'],
-        'IDPRAZO': int(row['IdPrazo']),
+        'IDPROC': int(row['IdProc']),
+        'DTCOMPROMISSO': pd.to_datetime(row['DtCompromisso']),
+        'DATA_CAD_PRAZO': pd.to_datetime(row['Data_cad_prazo']),
+        'CODPUBLICACAO': int(row['CodPublicacao']),
     }])
     except Exception as e:
         raise e
@@ -102,9 +109,6 @@ A base deve conter as seguintes colunas:
 
 {texto_colunas}
 
-Status válidos: 
-
-{texto_status}
 
 Baixe a planilha modelo abaixo.
 
@@ -113,7 +117,7 @@ Baixe a planilha modelo abaixo.
     st.markdown(
         gerar_markdown_download_excel(
             dicio_excel={'BASE': pd.DataFrame(columns=COLUNAS_OBRIGATORIAS)},
-            name='baixa_prazos.xlsx',
+            name='insert_prazos_baixados.xlsx',
             texto_botao='Planilha Modelo'
             ),
         unsafe_allow_html=True
@@ -165,33 +169,30 @@ Baixe a planilha modelo abaixo.
                     else:
                         df = df[COLUNAS_OBRIGATORIAS].copy()
                         
-                        if not df[~df['Status'].isin(STATUS)].empty:
-                            st.error(f'Coluna Status contém valores inválidos, verifique a base inserida!')
-                        else:
-                            with st.expander(filename):
-                                st.dataframe(df)
-                            
-                            st.warning(f'''
-        Ao clicar em Importar, aguarde até que a baixa seja finalizada!
-                        ''', icon='🚨')
-                            
-                            btn_import = st.empty()
-                            
-                            if btn_import.button('Baixar Prazos', key='import_button'):
-                                with st.spinner('Realizando baixa dos prazos, aguarde...'):
-                                    try:
-                                        btn_import.empty()
-                                        
-                                        update_importacao_TbStatusRobo(status='running', robo=robo)
-                                        
-                                        baixa_prazos(df)
-                                        st.success('Baixa de Prazos concluída com sucesso!')
-                                        
-                                    except Exception as e:
-                                        st.error(f'Erro:\n {e}')
-                                        
-                                    finally:
-                                        update_importacao_TbStatusRobo(status='paused', robo=robo)
+                        with st.expander(filename):
+                            st.dataframe(df)
+                        
+                        st.warning(f'''
+    Ao clicar em Importar, aguarde até que a baixa seja finalizada!
+                    ''', icon='🚨')
+                        
+                        btn_import = st.empty()
+                        
+                        if btn_import.button('Baixar Prazos', key='import_button'):
+                            with st.spinner('Realizando baixa dos prazos, aguarde...'):
+                                try:
+                                    btn_import.empty()
+                                    
+                                    # update_importacao_TbStatusRobo(status='running', robo=robo)
+                                    
+                                    baixa_prazos(df)
+                                    st.success('Baixa de Prazos concluída com sucesso!')
+                                    
+                                except Exception as e:
+                                    st.error(f'Erro:\n {e}')
+                                    
+                                finally:
+                                    update_importacao_TbStatusRobo(status='paused', robo=robo)
     else:
         st.warning(f'''
 Baixa de prazos em andamento, aguarde...

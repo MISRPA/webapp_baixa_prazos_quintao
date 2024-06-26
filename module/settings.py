@@ -29,16 +29,16 @@ else:
                     ''')
 
 # Configurações SQL ALCHEMY --- PROTHEUS ---
-CONEXAO_PROTHEUS = os.getenv("CONEXAO_PROTHEUS")
+# CONEXAO_PROTHEUS = os.getenv("CONEXAO_PROTHEUS")
 
-if CONEXAO_PROTHEUS:
-    CONEXAO_PROTHEUS = json.loads(CONEXAO_PROTHEUS)
-else:
-    raise Exception('''Configure a conexão do Protheus <CONEXAO_PROTHEUS=json> no arquivo .env
+# if CONEXAO_PROTHEUS:
+#     CONEXAO_PROTHEUS = json.loads(CONEXAO_PROTHEUS)
+# else:
+#     raise Exception('''Configure a conexão do Protheus <CONEXAO_PROTHEUS=json> no arquivo .env
                     
-                    >>> Exemplo:
-                    {"NAME":"MIS","SERVER":"server","DATABASE":"MIS","USER":"usuario","PASSWORD":"senha"}
-                    ''')
+#                     >>> Exemplo:
+#                     {"NAME":"MIS","SERVER":"server","DATABASE":"MIS","USER":"usuario","PASSWORD":"senha"}
+#                     ''')
     
 CONEXAO_PRODUCAO_ESCRITA = os.getenv("CONEXAO_PRODUCAO_ESCRITA")
 
@@ -105,12 +105,12 @@ DB_PASSWORD = CONEXAO_PADRAO['PASSWORD']
 DATABASE_URI = f"mssql+pyodbc:///?odbc_connect=DRIVER={DB_DRIVER};SERVER={DB_SERVER};DATABASE={DATABASE};UID={DB_USER};PWD={DB_PASSWORD}"
 
 # Configuração do SQLAlchemy protheus
-DB_SERVER_PROTHEUS = CONEXAO_PROTHEUS['SERVER']
-DATABASE_PROTHEUS = CONEXAO_PROTHEUS['DATABASE']
-DB_USER_PROTHEUS = CONEXAO_PROTHEUS['USER']
-DB_PASSWORD_PROTHEUS = CONEXAO_PROTHEUS['PASSWORD']
+# DB_SERVER_PROTHEUS = CONEXAO_PROTHEUS['SERVER']
+# DATABASE_PROTHEUS = CONEXAO_PROTHEUS['DATABASE']
+# DB_USER_PROTHEUS = CONEXAO_PROTHEUS['USER']
+# DB_PASSWORD_PROTHEUS = CONEXAO_PROTHEUS['PASSWORD']
 
-DATABASE_URI_PROTHEUS = f"mssql+pyodbc:///?odbc_connect=DRIVER={DB_DRIVER};SERVER={DB_SERVER_PROTHEUS};DATABASE={DATABASE};UID={DB_USER_PROTHEUS};PWD={DB_PASSWORD_PROTHEUS}"
+# DATABASE_URI_PROTHEUS = f"mssql+pyodbc:///?odbc_connect=DRIVER={DB_DRIVER};SERVER={DB_SERVER_PROTHEUS};DATABASE={DATABASE};UID={DB_USER_PROTHEUS};PWD={DB_PASSWORD_PROTHEUS}"
 
 # Configuração do SQLAlchemy base produção
 DB_SERVER_PRODUCAO_ESCRITA = CONEXAO_PRODUCAO_ESCRITA['SERVER']

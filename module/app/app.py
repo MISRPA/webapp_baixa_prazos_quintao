@@ -17,13 +17,8 @@ from module import settings
 from module.directory import Directory
 from module.core.utils import retry_on_failure
 from module import __version__
-from module.app.pages.report.financeiro import gerar_relatorio_financeiro
-from module.app.pages.report.batimento_processos import batimento_por_processo, download_report, DICIO_SELECT_QUERY
 from module.app.pages.auth.auth import select_usuarios
 from module.app.pages.auth.users import pagina_gerenciar_usuarios
-from module.app.pages.assinaturas.assinaturas import pagina_gerador_assinaturas
-from module.app.pages.assinaturas.assinatura_unica import pagina_gerador_assinaturas_unitario
-from module.app.pages.prazos import importacao
 from module.app.pages.prazos import baixa
 from module.core.customlogger import logger
 
@@ -127,6 +122,7 @@ def exibir_outros_apps():
         'Robô Api DataJud': 'http://10.0.211.82:8506/',
         'Robô Pesquisa Andamentos BB': 'http://10.0.211.82:8501/',
         'Robô Operação Liquida BB': 'http://10.0.211.82:8502/',
+        'Robô Relatórios': 'http://10.0.211.82:8503/',
         'Robô Financeiro Terceirização BB': 'http://10.0.211.82:8504/',
         'Robô Rastreamento Andamentos BB': 'http://10.0.211.82:8505/',
         'Robô Sentença BB': 'http://10.0.211.82:8508/',
@@ -229,67 +225,28 @@ def main():
 
         if user_data['role'] == 'admin':
             opcoes_users = [
-                "Batimento Processos",
-                "Financeiro",
-                "Gerador de Assinaturas em Lote",
-                "Gerador de Assinaturas Unitário",
                 "Usuário não associado",
                 
-                "Importação de Prazos",
                 "Baixa de Prazos",
                 
                 "Gerenciar Usuários",
                 ]
             mostrar_informacoes_aplicacao()
-
-        elif user_data['role'] == 'gestao':
-            opcoes_users = [
-                "Batimento Processos",
-                "Gerador de Assinaturas em Lote",
-                "Gerador de Assinaturas Unitário",
-                ]
-
-        elif user_data['role'] == 'financeiro':
-            opcoes_users = [
-                "Financeiro",
-                ]
             
-        elif user_data['role'] == 'ti':
-            opcoes_users = [
-                "Gerador de Assinaturas em Lote",
-                "Gerador de Assinaturas Unitário",
-                ]
-        
-        elif user_data['role'] == 'user':
+        if user_data['role'] == 'user':
             opcoes_users = [
                 "Usuário não associado",
-                ]
-        
+            ]
+            
         if username in baixa.USUARIOS_PERMITIDOS:
             opcoes_users+=['Baixa de Prazos']
-        if username in importacao.USUARIOS_PERMITIDOS:
-            opcoes_users+=['Importação de Prazos']
-        
+
         dropdown_opcoes = st.sidebar.selectbox("Escolha uma opção:", opcoes_users)
         
         # Opções de aplicações:
-        if dropdown_opcoes == "Batimento Processos":
-            batimento_por_processo(name, consulta_clientes, DICIO_SELECT_QUERY, download_report)
-
-        elif dropdown_opcoes == "Financeiro":            
-            gerar_relatorio_financeiro(consulta_clientes)
             
-        elif dropdown_opcoes == "Gerador de Assinaturas em Lote":
-            pagina_gerador_assinaturas(name)
-
-        elif dropdown_opcoes == "Gerador de Assinaturas Unitário":
-            pagina_gerador_assinaturas_unitario(name)
-            
-        elif dropdown_opcoes == "Gerenciar Usuários":
+        if dropdown_opcoes == "Gerenciar Usuários":
             pagina_gerenciar_usuarios()
-
-        elif dropdown_opcoes == "Importação de Prazos":
-            importacao.pagina_importacao_prazos(user_data)
             
         elif dropdown_opcoes == "Baixa de Prazos":
             baixa.pagina_baixa_prazos(user_data)
