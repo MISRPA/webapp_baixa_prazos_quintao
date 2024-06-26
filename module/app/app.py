@@ -223,14 +223,14 @@ def main():
         user_data = credentials['usernames'][username]
         
         authenticator.logout("Logout", "sidebar")
+        
+        opcoes_users = []
 
         if user_data['role'] == 'admin':
             opcoes_users = [
-                "Usuário não associado",
-                
                 "Baixa de Prazos",
-                
                 "Gerenciar Usuários",
+                "Usuário não associado",
                 ]
             mostrar_informacoes_aplicacao()
             
