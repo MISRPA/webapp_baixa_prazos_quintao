@@ -1,12 +1,13 @@
 [Unit]
 Description=Streamlit Baixa Prazos Quintao
 After=network.target
+
 [Service]
 EnvironmentFile=/etc/environment
 User=renato.ferreira
-WorkingDirectory=/home/renato.ferreira/repositorio_producao/webapp_baixa_prazos_quintao
-ExecStart=/home/renato.ferreira/repositorio_producao/webapp_baixa_prazos_quintao/venv/bin/streamlit run run_app.py --server.port 8511 --server.runOnSave False --browser.g
+ExecStart=/home/renato.ferreira/repositorio_producao/webapp_baixa_prazos_quintao/venv/bin/streamlit run /home/renato.ferreira/repositorio_producao/webapp_baixa_prazos_quintao/run_app.py --server.port 8511 --server.runOnSave False --browser.g
 Restart=always
 RestartSec=5s
+
 [Install]
 WantedBy=multi-user.target
