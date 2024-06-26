@@ -249,7 +249,7 @@ def main():
             pagina_gerenciar_usuarios()
             
         elif dropdown_opcoes == "Baixa de Prazos":
-            baixa.pagina_baixa_prazos(user_data)
+            baixa.pagina_baixa_prazos(user_data, name)
         
         elif dropdown_opcoes == "Usuário não associado":
             st.warning(':warning: Seu usuário não está associado a nenhum grupo. \n\n Gentileza abrir um chamado para inclusão no grupo necessário.')

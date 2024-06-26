@@ -96,25 +96,30 @@ def baixa_prazos(df: pd.DataFrame):
         con.close()
 
 
-def pagina_baixa_prazos(user_data):
+def pagina_baixa_prazos(user_data, name):
     
     df = select_TbStatusRobo(robo=robo)
     
     status_robo = df['STATUS'][0]
     importacao = df['IMPORTACAO'][0]
     
-    st.header("Baixa de Prazos")
-    st.warning(f"""
-A base deve conter as seguintes colunas:
-
-{texto_colunas}
-
-
-Baixe a planilha modelo abaixo.
-
-            """, icon="🚨")
-
-    st.markdown(
+    st.header("Insert Baixa de Prazos")
+    
+    with st.expander(':information_source: Informações sobre a aplicação'):
+        st.info(f'''
+Bem vindo(a), {name}! \n\n 
+Esta aplicação facilita a realização do processo de inserção de prazos do tipo "Prazo verificado pela operação" na base do MAX. \n\n 
+Para que funcione corretamente, é necessário inserir um arquivo excel com uma coluna que **contenha o nome exatamente igual a:
+"IdProc", "DtCompromisso", "Data_cad_prazo" e "CodPublicacao"**. \n\n
+Após o upload, você poderá visualizar os casos inseridos na opção expansível "Prévia dos dados" e então clicar na opção "Inserir prazos". \n\n
+:warning: :orange[**Esta operação pode demorar um pouco, de acordo com a quantidade de prazos a serem inseridos.**] :warning: \n
+Neste momento a aplicação fará uma inserção dos dados enviados em nosso banco de dados. \n
+                    ''', 
+                    icon="ℹ️"
+                )
+# Ao completar o processo, basta clicar no botão "Download Relatório" que será realizado o download do arquivo final.
+        
+        st.markdown(
         gerar_markdown_download_excel(
             dicio_excel={'BASE': pd.DataFrame(columns=COLUNAS_OBRIGATORIAS)},
             name='modelo_insert_prazos_baixados.xlsx',
@@ -170,7 +175,7 @@ Baixe a planilha modelo abaixo.
                     else:
                         df = df[COLUNAS_OBRIGATORIAS].copy()
                         
-                        with st.expander(filename):
+                        with st.expander('Prévia dos dados'):
                             st.dataframe(df)
                         
                         st.warning(f'''
@@ -179,7 +184,7 @@ Baixe a planilha modelo abaixo.
                         
                         btn_import = st.empty()
                         
-                        if btn_import.button('Baixar Prazos', key='import_button'):
+                        if btn_import.button('Inserir prazos', key='import_button'):
                             with st.spinner('Realizando baixa dos prazos, aguarde...'):
                                 try:
                                     btn_import.empty()
