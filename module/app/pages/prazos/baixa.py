@@ -2,7 +2,7 @@ import streamlit as st
 import io
 import pandas as pd
 import os
-
+from datetime import datetime
 from module.app.utils.components import gerar_markdown_download_excel
 from module.core.utils import retry_on_failure
 from module.manager import engine_espelho, engine_producao_escrita
@@ -22,8 +22,6 @@ USUARIOS_PERMITIDOS = [
 
 COLUNAS_OBRIGATORIAS = [
     "IdProc",
-    "DtCompromisso",
-    "Data_cad_prazo",
     "CodPublicacao",
 ]
 
@@ -76,7 +74,7 @@ def baixa_prazos(df: pd.DataFrame):
         :IDPROC,
         :DTCOMPROMISSO,
         1775,
-        'SIM',
+        'Sim',
         '228',
         'ROBO.WEBAPP.LETICIA',
         :DATA_CAD_PRAZO,
@@ -85,8 +83,8 @@ def baixa_prazos(df: pd.DataFrame):
     )
     '''), [{
         'IDPROC': int(row['IdProc']),
-        'DTCOMPROMISSO': pd.to_datetime(row['DtCompromisso']),
-        'DATA_CAD_PRAZO': pd.to_datetime(row['Data_cad_prazo']),
+        'DTCOMPROMISSO': datetime.today().strftime('%Y-%m-%d 00:00:00'),
+        'DATA_CAD_PRAZO': datetime.today().strftime('%Y-%m-%d 00:00:00'),
         'CODPUBLICACAO': int(row['CodPublicacao']),
     }])
     except Exception as e:
@@ -110,7 +108,7 @@ def pagina_baixa_prazos(user_data, name):
 Bem vindo(a), {name}! \n\n 
 Esta aplicação facilita a realização do processo de inserção de prazos do tipo "Prazo verificado pela operação" na base do MAX. \n\n 
 Para que funcione corretamente, é necessário inserir um arquivo excel com uma coluna que **contenha o nome exatamente igual a:
-"IdProc", "DtCompromisso", "Data_cad_prazo" e "CodPublicacao"**. \n\n
+"IdProc" e "CodPublicacao"**. \n\n
 Após o upload, você poderá visualizar os casos inseridos na opção expansível "Prévia dos dados" e então clicar na opção "Inserir prazos". \n\n
 :warning: :orange[**Esta operação pode demorar um pouco, de acordo com a quantidade de prazos a serem inseridos.**] :warning: \n
 Neste momento a aplicação fará uma inserção dos dados enviados em nosso banco de dados. \n
